@@ -75,11 +75,12 @@ class PowerManagement(BoxLayout):
             #self.switch_layout.add_widget(switch)
 
     def toggle_switch(self, label, pin, value):
-        logboek.log('status', f'schakelde {label} naar {value}')
         # Turn the GPIO pin on or off based on the switch state
         if value:
+            logboek.log('status', f'schakelde {label} aan')
             GPIO.output(pin, GPIO.HIGH)  # Turn on the device
         else:
+            logboek.log('status', f'schakelde {label} uit')
             GPIO.output(pin, GPIO.LOW)  # Turn off the device
 
     def on_stop(self):
