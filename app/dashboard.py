@@ -150,7 +150,7 @@ class Dashboard(BoxLayout):
                 g.value = random.randint(-5, 5)
             elif g.id == "temperature":
                 temp_value = random.randint(85, 90)
-                logboek.log('temp', f'{rpm_value}')
+                logboek.log('temp', f'{temp_value}')
                 g.value = temp_value
             elif g.id == "fuel":
                 if 100 >= g.value > 10:
