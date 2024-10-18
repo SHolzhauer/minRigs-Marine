@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd ~/minRigs-Marine
-source venv/bin/active
-python app/barendBoot.py
+git pull
+source /opt/minRigs-Marine/venv/bin/activate
+python /opt/minRigs-Marine/app/barendBoot.py

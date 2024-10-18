@@ -5,7 +5,7 @@ After=multi-user.target display-manager.service
 
 [Service]
 Type=simple
-ExecStart=/bin/bash -c 'source /opt/minRigs-Marine/venv/bin/activate && python /opt/minRigs-Marine/app/barendBoot.py'
+ExecStart=/opt/minRigs-Marine/app.sh'
 WorkingDirectory=/opt/minRigs-Marine
 User=sholzhauer
 Environment=DISPLAY=:0
