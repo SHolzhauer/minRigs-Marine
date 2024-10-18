@@ -1,4 +1,4 @@
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import configparser
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
@@ -18,7 +18,7 @@ class PowerManagement(BoxLayout):
         self.add_widget(self.switch_layout)
         
         # Setup GPIO
-        #GPIO.setmode(GPIO.BCM)  # Use BCM pin numbering
+        GPIO.setmode(GPIO.BCM)  # Use BCM pin numbering
         self.pins = []
         for i in ['een','twee','drie','vier','vijf','zes','zeven','acht']:
             try:
@@ -36,13 +36,13 @@ class PowerManagement(BoxLayout):
                 pass
 
         # Initialize the GPIO pins as outputs
-        #for item in self.pins:
-        #    pin = item['pin']
-        #    GPIO.setup(pin, GPIO.OUT)
-        #    if item['enabled']:
-        #        GPIO.output(pin, GPIO.HIGH)  # Set pin to be on initially
-        #    else:
-        #        GPIO.output(pin, GPIO.LOW)  # Set pins to be off initially
+        for item in self.pins:
+            pin = item['pin']
+            GPIO.setup(pin, GPIO.OUT)
+            if item['enabled']:
+                GPIO.output(pin, GPIO.HIGH)  # Set pin to be on initially
+            else:
+                GPIO.output(pin, GPIO.LOW)  # Set pins to be off initially
 
         # First column with the boat image
         boat_image = Image(source='boat.jpg')  # Add your boat image here
@@ -69,7 +69,6 @@ class PowerManagement(BoxLayout):
             #self.switch_layout.add_widget(switch)
 
     def toggle_switch(self, pin, value):
-        return
         # Turn the GPIO pin on or off based on the switch state
         if value:
             GPIO.output(pin, GPIO.HIGH)  # Turn on the device
