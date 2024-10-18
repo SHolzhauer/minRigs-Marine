@@ -8,7 +8,7 @@ from kivy.clock import Clock
 
 class LogboekDisplay(BoxLayout):
     def __init__(self, **kwargs):
-        super(Logboek, self).__init__(**kwargs)
+        super(LogboekDisplay, self).__init__(**kwargs)
         self.orientation = 'vertical'
 
         # Create a header layout
