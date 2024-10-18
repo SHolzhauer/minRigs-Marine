@@ -1,8 +1,7 @@
 [Unit]
 Description=minRigs Marine
 #After=network.target
-After=display-manager.service
-Requires=display-manager.service
+After=multi-user.target display-manager.service
 
 [Service]
 Type=simple
