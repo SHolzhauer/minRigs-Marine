@@ -3,8 +3,12 @@ from kivy.uix.accordion import Accordion, AccordionItem
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.core.window import Window  # Import the Window module
+from base import Logboek
 from power_management import PowerManagement    # Import the PowerManagement class
 from dashboard import Dashboard                 # Import the Dashboard class
+from logboek import LogboekDisplay              # Import the LogboekDisplay class
+
+logboek = Logboek()
 
 class MyApp(App):
     def __init__(self, **kwargs):
@@ -19,17 +23,21 @@ class MyApp(App):
         # Create an accordion
         accordion = Accordion(orientation='horizontal')
 
-        # Dashboard accordion item
+        # Dashboard
         dashboard_item = AccordionItem(title='Dashboard')
         dashboard_item.add_widget(Dashboard())
         
-        # Power Management accordion item
+        # Power Management
         power_mgmt_item = AccordionItem(title='Power Management')
-        
-        # Add the PowerManagement layout from the second file
         power_mgmt_item.add_widget(PowerManagement())
 
+        # Logboek
+        logboek_item = AccordionItem(title='Logboek')
+        logboek_item.add_widget(LogboekDisplay())
+
+        
         # Add accordion items to accordion
+        accordion.add_widget(logboek_item)
         accordion.add_widget(power_mgmt_item)
         accordion.add_widget(dashboard_item)
 
@@ -39,4 +47,6 @@ class MyApp(App):
         return layout
 
 if __name__ == '__main__':
+    logboek.log('status', 'aan gezet')
     MyApp().run()
+    logboek.log('status', 'gaat uit')
