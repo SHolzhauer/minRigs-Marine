@@ -48,6 +48,8 @@ class PowerManagement(BoxLayout):
         boat_image = Image(source='boat.jpg')  # Add your boat image here
         self.add_widget(boat_image)
 
+        # Add header
+        l = Label(text='Stroom schakelaars', font_size='30sp')
         # Create switches for each light
         for item in self.pins:
             label = item['label']
