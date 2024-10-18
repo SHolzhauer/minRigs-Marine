@@ -1,10 +1,27 @@
 [Unit]
 Description=minRigs Marine
-After=multi-user.target
+After=network.target
 
 [Service]
-Type=idle
-ExecStart=~/minRigs-Marine/app.sh
+Type=simple
+ExecStart=/bin/bash -c 'source /opt/minRigs-Marine/venv/bin/activate && python /opt/minRigs-Marine/app/barendBoot.py'
+WorkingDirectory=/opt/minRigs-Marine
+User=sholzhauer
+Environment=DISPLAY=:0
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
+
+
+#[Unit]
+#Description=minRigs Marine
+#After=multi-user.target
+#
+#[Service]
+#Type=idle
+#ExecStart=~/minRigs-Marine/app.sh
+#
+#[Install]
+#WantedBy=multi-user.target
+
