@@ -38,15 +38,19 @@ class LogboekDisplay(BoxLayout):
         """Update the displayed logboek with new rows from the CSV file."""
         # Clear existing rows in the grid layout
         self.grid_layout.clear_widgets()
-        
+
         # Read the CSV file
         if os.path.exists(self.csv_file_path):
             with open(self.csv_file_path, mode='r') as file:
                 csv_reader = csv.reader(file)
-                for row in csv_reader:
+                rows = list(csv_reader)  # Read all rows into a list
+                
+                # Reverse the order of rows to display new items on top
+                for row in reversed(rows):
                     if len(row) == 3:  # Ensure there are three columns
                         time, unit, measurement = row
                         self.grid_layout.add_widget(Label(text=time, size_hint_y=None, height=30))
                         self.grid_layout.add_widget(Label(text=unit, size_hint_y=None, height=30))
                         self.grid_layout.add_widget(Label(text=measurement, size_hint_y=None, height=30))
+
 
