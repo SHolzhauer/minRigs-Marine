@@ -4,6 +4,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.uix.switch import Switch
+from base import Logboek
+
+logboek = Logboek()
 
 # Get the power config
 config = configparser.ConfigParser()
@@ -59,7 +62,7 @@ class PowerManagement(BoxLayout):
             # Create horizontal BoxLayout for each row (Label + Switch)
             row = BoxLayout(orientation='horizontal')
             switch = Switch(active=enabled)
-            switch.bind(active=lambda sw, val, pin=pin: self.toggle_switch(pin, val))
+            switch.bind(active=lambda sw, val, label=label, pin=pin: self.toggle_switch(pin, val))
             switch_label = Label(text=label)
             row.add_widget(switch_label)
             row.add_widget(switch)
@@ -71,7 +74,8 @@ class PowerManagement(BoxLayout):
             #self.switch_layout.add_widget(switch_label)
             #self.switch_layout.add_widget(switch)
 
-    def toggle_switch(self, pin, value):
+    def toggle_switch(self, label, pin, value):
+        logboek.log('status', f'schakelde {label} naar {value}')
         # Turn the GPIO pin on or off based on the switch state
         if value:
             GPIO.output(pin, GPIO.HIGH)  # Turn on the device

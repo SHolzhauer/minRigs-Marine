@@ -13,9 +13,9 @@ class LogboekDisplay(BoxLayout):
 
         # Create a header layout
         header = BoxLayout(size_hint_y=None, height=30)  # Fixed height for header
-        header.add_widget(Label(text='Tijd', size_hint_x=0.33))
-        header.add_widget(Label(text='Unit', size_hint_x=0.33))
-        header.add_widget(Label(text='Meet waarde', size_hint_x=0.33))
+        header.add_widget(Label(text='Tijd', size_hint_x=0.33, font_size='30sp'))
+        header.add_widget(Label(text='Unit', size_hint_x=0.33, font_size='30sp'))
+        header.add_widget(Label(text='Meet waarde', size_hint_x=0.33, font_size='30sp'))
         self.add_widget(header)
 
         # Create a scrollable area for the rows

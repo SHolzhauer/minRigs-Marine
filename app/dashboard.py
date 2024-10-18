@@ -5,6 +5,9 @@ from speedmeter import SpeedMeter
 # For testing
 from kivy.clock import Clock
 import random
+from base import Logboek
+
+logboek = Logboek()
 
 class Dashboard(BoxLayout):
     def __init__(self, **kwargs):
@@ -137,14 +140,18 @@ class Dashboard(BoxLayout):
     def update_detailed_gauges(self, dt):
         for g in self.gauges:
             if g.id == "rpm":
-                g.value = random.randint(800, 900)
+                rpm_value = random.randint(800, 900)
+                logboek.log('rpm', f'{rpm_value}')
+                g.value = rpm_value
     
     def update_gauges(self, dt):
         for g in self.gauges:
             if g.id == "rudder":
                 g.value = random.randint(-5, 5)
             elif g.id == "temperature":
-                g.value = random.randint(85, 90)
+                temp_value = random.randint(85, 90)
+                logboek.log('temp', f'{rpm_value}')
+                g.value = temp_value
             elif g.id == "fuel":
                 if 100 >= g.value > 10:
                     g.value = g.value - 1
