@@ -6,7 +6,7 @@ class Logboek:
         self._logboek = "logboek.csv"
 
     def log(self, unit, metric):
-        if unit not in ['vaaruren', 'tank', 'temp', 'status']:
+        if unit not in ['vaaruren', 'tank', 'temp', 'status', 'rpm']:
             raise ValueError("unit not supported")
         
         tijd = datetime.datetime.now()
