@@ -12,4 +12,4 @@ class Logboek:
         tijd = datetime.datetime.now()
 
         with open(self._logboek, "a") as logboek:
-            logboek.write(f"{tijd},{unit},{metric}")
+            logboek.write(f"{tijd},{unit},{metric}\n")
