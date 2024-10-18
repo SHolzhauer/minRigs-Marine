@@ -62,7 +62,7 @@ class PowerManagement(BoxLayout):
             # Create horizontal BoxLayout for each row (Label + Switch)
             row = BoxLayout(orientation='horizontal')
             switch = Switch(active=enabled)
-            switch.bind(active=lambda sw, val, label=label, pin=pin: self.toggle_switch(pin, val))
+            switch.bind(active=lambda sw, val, label=label, pin=pin: self.toggle_switch(label, pin, val))
             switch_label = Label(text=label)
             row.add_widget(switch_label)
             row.add_widget(switch)
