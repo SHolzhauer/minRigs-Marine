@@ -50,6 +50,7 @@ class PowerManagement(BoxLayout):
 
         # Add header
         l = Label(text='Stroom schakelaars', font_size='30sp')
+        self.switch_layout.add_widget(l)
         # Create switches for each light
         for item in self.pins:
             label = item['label']
