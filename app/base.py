@@ -1,4 +1,4 @@
-from datetime.datetime import now
+import datetime
 
 class Logboek:
 
@@ -9,6 +9,7 @@ class Logboek:
         if unit not in ['vaaruren', 'tank', 'temp', 'status']:
             raise ValueError("unit not supported")
         
-        
+        tijd = datetime.datetime.now()
+
         with open(self._logboek, "a") as logboek:
-            logboek.write(f"{now()},{unit},{metric}")
+            logboek.write(f"{tijd},{unit},{metric}")
