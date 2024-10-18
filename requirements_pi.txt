@@ -1,0 +1,7 @@
+kivy[base]
+libgl1-mesa-glx # Raspberry pi requirement 
+libgles2-mesa   # Raspberry pi requirement 
+libegl1-mesa    # Raspberry pi requirement 
+libmtdev1       # Raspberry pi requirement
+python3-rpi.gpio
+#kivy_examples
