@@ -1,6 +1,8 @@
 [Unit]
 Description=minRigs Marine
-After=network.target
+#After=network.target
+After=graphical.target
+Requires=graphical.target
 
 [Service]
 Type=simple
@@ -11,7 +13,8 @@ Environment=DISPLAY=:0
 Restart=on-failure
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=graphical.target
+#WantedBy=multi-user.target
 
 
 #[Unit]
