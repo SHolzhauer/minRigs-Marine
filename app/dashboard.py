@@ -131,8 +131,8 @@ class Dashboard(BoxLayout):
         self.add_widget(grid)
 
         # Schedule the gauge update function to be called every second
-        Clock.schedule_interval(self.update_detailed_gauges, 0.3)
-        Clock.schedule_interval(self.update_gauges, 1)
+        Clock.schedule_interval(self.update_detailed_gauges, 1)
+        Clock.schedule_interval(self.update_gauges, 8)
 
     def update_detailed_gauges(self, dt):
         for g in self.gauges:
