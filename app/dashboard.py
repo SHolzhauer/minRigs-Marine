@@ -141,7 +141,6 @@ class Dashboard(BoxLayout):
         for g in self.gauges:
             if g.id == "rpm":
                 rpm_value = random.randint(800, 900)
-                logboek.log('rpm', f'{rpm_value}')
                 g.value = rpm_value
     
     def update_gauges(self, dt):

@@ -3,7 +3,7 @@ from kivy.uix.accordion import Accordion, AccordionItem
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.core.window import Window  # Import the Window module
-from base import Logboek
+from base import Logboek, startup, shutdown
 from power_management import PowerManagement    # Import the PowerManagement class
 from dashboard import Dashboard                 # Import the Dashboard class
 from logboek import LogboekDisplay              # Import the LogboekDisplay class
@@ -48,5 +48,7 @@ class MyApp(App):
 
 if __name__ == '__main__':
     logboek.log('status', 'aan gezet')
+    startup()
     MyApp().run()
     logboek.log('status', 'gaat uit')
+    shutdown()

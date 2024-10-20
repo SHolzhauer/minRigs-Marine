@@ -4,5 +4,5 @@ libgles2-mesa   # Raspberry pi requirement
 libegl1-mesa    # Raspberry pi requirement 
 libmtdev1       # Raspberry pi requirement
 RPi.gpio
-cefpython3
+GitPython
 #kivy_examples
