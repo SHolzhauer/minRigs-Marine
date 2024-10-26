@@ -13,8 +13,10 @@ logboek = Logboek()
 class MyApp(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.title = "barendBoot Control Panel"  # Set your desired application title here
-        Window.fullscreen = 'auto' # Set to launch fullscreen
+        self.title = "barendBoot Control Panel"
+        
+        # Set to launch fullscreen
+        Window.fullscreen = 'auto'
 
     def build(self):
         # Create main layout
