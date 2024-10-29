@@ -7,6 +7,7 @@ from kivy.core.window import Window
 from base import Logboek, startup, shutdown
 from power_management import PowerManagement
 from logboek import LogboekDisplay
+from nautical_map import NauticalMap  # Import your new NauticalMap class
 
 logboek = Logboek()
 
@@ -51,6 +52,10 @@ class MyApp(App):
         # Create an accordion
         accordion = Accordion(orientation='horizontal')
 
+        # Add Nautical Map
+        map_item = AccordionItem(title='Nautical Map')
+        map_item.add_widget(NauticalMap())
+        
         # Power Management
         power_mgmt_item = AccordionItem(title='Power Management')
         power_mgmt_item.add_widget(PowerManagement())
@@ -62,6 +67,7 @@ class MyApp(App):
         # Add accordion items to accordion
         accordion.add_widget(logboek_item)
         accordion.add_widget(power_mgmt_item)
+        accordion.add_widget(map_item)
 
         # Add accordion to the content layout
         content_layout.add_widget(accordion)
