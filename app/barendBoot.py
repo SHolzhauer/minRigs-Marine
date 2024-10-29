@@ -15,7 +15,7 @@ class MyApp(App):
         super().__init__(**kwargs)
         self.title = "barendBoot Control Panel"
         
-        # Set to launch fullscreen
+        # Set fullscreen
         Window.fullscreen = 'auto'
 
     def build(self):
@@ -26,10 +26,20 @@ class MyApp(App):
         top_bar = BoxLayout(orientation='horizontal', size_hint_y=0.1)
         
         # Title label
-        title_label = Label(text="barendBoot Control Panel", font_size=20, halign="left", valign="middle")
+        title_label = Label(
+            text="barendBoot Control Panel",
+            font_size=20,
+            halign="left",
+            valign="middle",
+            text_size=(Window.width * 0.8, None)  # Define text width for better alignment
+        )
         
         # Exit button
-        exit_button = Button(text="Exit", size_hint_x=0.15, on_release=self.exit_app())
+        exit_button = Button(
+            text="Exit",
+            size_hint_x=0.15,
+            on_release=lambda x: self.exit_app()  # Use lambda to bind the function call
+        )
         
         # Add title and exit button to the top bar
         top_bar.add_widget(title_label)
@@ -65,7 +75,7 @@ class MyApp(App):
     def exit_app(self):
         logboek.log('status', 'gaat uit')
         shutdown()
-        App.get_running_app().stop()
+        self.stop()  # Close the app
 
 if __name__ == '__main__':
     logboek.log('status', 'aan gezet')
