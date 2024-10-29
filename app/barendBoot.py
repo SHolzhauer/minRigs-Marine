@@ -7,7 +7,7 @@ from kivy.core.window import Window
 from base import Logboek, startup, shutdown
 from power_management import PowerManagement
 from logboek import LogboekDisplay
-from nautical_map import NauticalMap  # Import your new NauticalMap class
+from navigation import NauticalMap  # Import your new NauticalMap class
 
 logboek = Logboek()
 
