@@ -23,7 +23,7 @@ class PowerManagement(BoxLayout):
         # Setup GPIO
         GPIO.setmode(GPIO.BCM)  # Use BCM pin numbering
         self.pins = []
-        for i in ['een','twee','drie','vier','vijf','zes','zeven','acht']:
+        for i in ['acht','zeven','zes','vijf','vier','drie','twee','een']:
             try:
                 pin_config = {
                     'label': config[i]['label'],
