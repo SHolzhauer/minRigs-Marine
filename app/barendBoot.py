@@ -20,6 +20,21 @@ class MyApp(App):
 
     def build(self):
         # Create main layout
+        main_layout = BoxLayout(orientation='vertical')
+
+        # Create the top bar
+        top_bar = BoxLayout(orientation='horizontal', size_hint_y=0.1)
+        
+        # Title label
+        title_label = Label(text=f"{self.title}", font_size=20, halign="left", valign="middle")
+        
+        # Exit button
+        exit_button = Button(text="Exit", size_hint_x=0.15, on_release=self.exit_app)
+        
+        # Add title and exit button to the top bar
+        top_bar.add_widget(title_label)
+        top_bar.add_widget(exit_button)
+
         layout = BoxLayout(orientation='horizontal')
 
         # Create an accordion
@@ -46,6 +61,10 @@ class MyApp(App):
         # Add accordion to the main layout
         layout.add_widget(accordion)
 
+        # Add the top bar and content layout to the main layout
+        main_layout.add_widget(top_bar)
+        main_layout.add_widget(content_layout)
+        
         return layout
 
 if __name__ == '__main__':

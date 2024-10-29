@@ -67,12 +67,6 @@ class PowerManagement(BoxLayout):
             row.add_widget(switch_label)
             row.add_widget(switch)
             self.switch_layout.add_widget(row)
-            
-            #switch = Switch(active=False)
-            #switch.bind(active=lambda sw, val, pin=pin: self.toggle_switch(pin, val))
-            #switch_label = Label(text=label)
-            #self.switch_layout.add_widget(switch_label)
-            #self.switch_layout.add_widget(switch)
 
     def toggle_switch(self, label, pin, value):
         # Turn the GPIO pin on or off based on the switch state
