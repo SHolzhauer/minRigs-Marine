@@ -64,7 +64,7 @@ class MyApp(App):
 
         # Add the top bar and content layout to the main layout
         main_layout.add_widget(top_bar)
-        main_layout.add_widget(content_layout)
+        main_layout.add_widget(layout)
 
         return layout
 
