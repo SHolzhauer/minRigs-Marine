@@ -2,3 +2,4 @@ kivy[base]
 kivy_examples
 gitpython
 pywebview
+PyGObject

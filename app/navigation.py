@@ -1,3 +1,7 @@
+import gi
+gi.require_version('Gtk', '3.0')
+gi.require_version('WebKit2', '4.0')
+from gi.repository import Gtk, WebKit2
 import webview
 
 from kivy.uix.boxlayout import BoxLayout
@@ -11,16 +15,19 @@ from threading import Thread
 class NauticalMap(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.orientation = 'vertical'
-        self.webview = None
-        self.start_webview()
+        self.webview = WebKit2.WebView()
+        self.webview.load_uri("https://www.google.com/maps")
 
-    def start_webview(self):
-        # Start the webview in a separate thread
-        Thread(target=self.create_webview).start()
+        # Create a GTK window off-screen to hold the webview
+        self.window = Gtk.Window()
+        self.window.set_size_request(800, 600)
+        self.window.add(self.webview)
+        self.window.show_all()
 
-    def create_webview(self):
-        # Open Google Maps in webview
-        self.webview = webview.create_window("Google Maps", "https://www.google.com/maps")
-        webview.start()
+        # Render the webview content within Kivy (simplified)
+        Thread(target=self.update_webview).start()
+
+    def update_webview(self):
+        # Continuously update the content in the WebKit widget
+        Gtk.main()
 
