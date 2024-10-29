@@ -62,7 +62,7 @@ class MyApp(App):
 
         return main_layout
 
-    def exit_app(self, instance):
+    def exit_app(self):
         logboek.log('status', 'gaat uit')
         shutdown()
         App.get_running_app().stop()
