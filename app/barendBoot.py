@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.uix.accordion import Accordion, AccordionItem
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
+from kivy.uix.button import Button
 from kivy.core.window import Window  # Import the Window module
 from base import Logboek, startup, shutdown
 from power_management import PowerManagement    # Import the PowerManagement class
@@ -64,7 +65,7 @@ class MyApp(App):
         # Add the top bar and content layout to the main layout
         main_layout.add_widget(top_bar)
         main_layout.add_widget(content_layout)
-        
+
         return layout
 
 if __name__ == '__main__':
