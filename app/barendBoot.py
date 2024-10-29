@@ -30,7 +30,7 @@ class MyApp(App):
         title_label = Label(text=f"{self.title}", font_size=20, halign="left", valign="middle")
         
         # Exit button
-        exit_button = Button(text="Exit", size_hint_x=0.15, on_release=self.exit_app)
+        exit_button = Button(text="Exit", size_hint_x=0.15, on_release=self.stop())
         
         # Add title and exit button to the top bar
         top_bar.add_widget(title_label)
