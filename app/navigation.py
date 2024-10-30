@@ -17,7 +17,7 @@ class NauticalMap(BoxLayout):
         
         self.map = MapView(
             map_source=mapsource,
-            zoom=13, 
+            zoom=14, 
             lat=52.51677023841208, 
             lon=4.788266954784756,
             pause_on_action=False
