@@ -11,8 +11,8 @@ class NauticalMap(BoxLayout):
         super().__init__(**kwargs)
         
         mapsource = MapSource(
-            min_zoom=13,
-            max_zoom=16
+            min_zoom=14,
+            max_zoom=14
         )
         
         self.map = MapView(
