@@ -1,4 +1,5 @@
 kivy[base]
 kivy_examples
 gitpython
-kivy_garden.mapview
+kivy-garden
+mapview
