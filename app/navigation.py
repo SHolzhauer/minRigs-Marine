@@ -9,6 +9,21 @@ class NauticalMap(BoxLayout):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        map = MapView(zoom=13, lat=52.51677023841208, lon=4.788266954784756)
+        self.map = MapView(zoom=13, lat=52.51677023841208, lon=4.788266954784756)
 
-        self.add_widget(map)
+        # Define min and max zoom limits
+        self.min_zoom = 10
+        self.max_zoom = 17
+        
+        # Add map widget to layout
+        self.add_widget(self.map)
+        
+        # Schedule a check to enforce zoom limits on every frame
+        Clock.schedule_interval(self.enforce_zoom_limits, 1 / 60)
+
+    def enforce_zoom_limits(self, dt):
+        # Adjust zoom to stay within bounds if it exceeds limits
+        if self.map.zoom < self.min_zoom:
+            self.map.zoom = self.min_zoom
+        elif self.map.zoom > self.max_zoom:
+            self.map.zoom = self.max_zoom
