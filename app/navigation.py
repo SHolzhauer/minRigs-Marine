@@ -11,7 +11,4 @@ class NauticalMap(BoxLayout):
         super().__init__(**kwargs)
         map = MapView(zoom=13, lat=52.30, lon=4.47)
 
-    def update_webview(self):
-        # Continuously update the content in the WebKit widget
-        Gtk.main()
-
+        self.add_widget(map)
