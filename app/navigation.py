@@ -9,6 +9,6 @@ class NauticalMap(BoxLayout):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        map = MapView(zoom=13, lat=52.30, lon=4.47)
+        map = MapView(zoom=13, lat=52.51677023841208, lon=4.788266954784756)
 
         self.add_widget(map)
