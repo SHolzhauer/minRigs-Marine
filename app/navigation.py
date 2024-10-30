@@ -2,7 +2,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
 from kivy.graphics import Rectangle, Color
 from kivy.clock import Clock
-from kivy_garden.mapview import MapView, MarkerMap
+from kivy_garden.mapview import MapView
 
 
 class NauticalMap(BoxLayout):
