@@ -8,6 +8,7 @@ from base import Logboek, startup, shutdown
 from power_management import PowerManagement
 from logboek import LogboekDisplay
 from navigation import NauticalMap  # Import your new NauticalMap class
+import os
 
 logboek = Logboek()
 
@@ -41,10 +42,26 @@ class MyApp(App):
             size_hint_x=0.15,
             on_release=lambda x: self.exit_app()  # Use lambda to bind the function call
         )
+
+        # Reboot button
+        reboot_button = Button(
+            text="Exit",
+            size_hint_x=0.8,
+            on_release=lambda x: os.system("reboot now")  # Use lambda to bind the function call
+        )
+
+        # Shutdown button
+        shutdown_button = Button(
+            text="Exit",
+            size_hint_x=0.8,
+            on_release=lambda x: os.system("shutdown -h now")  # Use lambda to bind the function call
+        )
         
         # Add title and exit button to the top bar
         top_bar.add_widget(title_label)
         top_bar.add_widget(exit_button)
+        top_bar.add_widget(reboot_button)
+        top_bar.add_widget(shutdown_button)
 
         # Create main content layout
         content_layout = BoxLayout(orientation='horizontal')
