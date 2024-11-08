@@ -22,7 +22,7 @@ def reboot_system():
 class MyApp(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.title = "barendBoot Control Panel"
+        self.title = "minRigs - Marine"
         
         # Set fullscreen
         Window.fullscreen = 'auto'
@@ -36,7 +36,7 @@ class MyApp(App):
         
         # Title label
         title_label = Label(
-            text="barendBoot Control Panel",
+            text=f"{self.title}",
             font_size=20,
             halign="left",
             valign="middle",
