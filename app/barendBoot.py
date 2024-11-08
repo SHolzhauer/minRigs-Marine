@@ -12,6 +12,13 @@ import os
 
 logboek = Logboek()
 
+def shutdown_system():
+    os.system("shutdown -h now")
+
+def reboot_system():
+    os.system("reboot now")
+
+
 class MyApp(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -45,16 +52,16 @@ class MyApp(App):
 
         # Reboot button
         reboot_button = Button(
-            text="Exit",
-            size_hint_x=0.8,
-            on_release=lambda x: os.system("reboot now")  # Use lambda to bind the function call
+            text="reboot",
+            size_hint_x=0.08,
+            on_release=lambda x: reboot_system()  # Use lambda to bind the function call
         )
 
         # Shutdown button
         shutdown_button = Button(
-            text="Exit",
-            size_hint_x=0.8,
-            on_release=lambda x: os.system("shutdown -h now")  # Use lambda to bind the function call
+            text="shutdown",
+            size_hint_x=0.08,
+            on_release=lambda x: shutdown_system()  # Use lambda to bind the function call
         )
         
         # Add title and exit button to the top bar
