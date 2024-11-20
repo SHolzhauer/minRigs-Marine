@@ -16,7 +16,7 @@ def shutdown_system():
     os.system("shutdown -h now")
 
 def reboot_system():
-    os.system("reboot now")
+    os.system("shutdown -r now")
 
 
 class MyApp(App):
