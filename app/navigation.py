@@ -1,3 +1,4 @@
+import json
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
 from kivy.graphics import Rectangle, Color
@@ -11,8 +12,8 @@ class NauticalMap(BoxLayout):
         super().__init__(**kwargs)
         
         mapsource = MapSource(
-            min_zoom=14,
-            max_zoom=14
+            #min_zoom=14,
+            #max_zoom=14
         )
         
         self.map = MapView(
@@ -23,7 +24,20 @@ class NauticalMap(BoxLayout):
             pause_on_action=False
         )
         
-        
+        # Add the bridges
+        with open("src/bridge.json", "r") as f:
+            info = f.read()
+
+        info = json.loads(info)
+        for bridge in info["Result"]:
+            br_geo = bridge["Geometry"][7:-1].split(" ")
+            marker = MapMarker(
+                lat=br_geo[1],
+                lon=br_geo[0]
+            )
+            self.map.add_marker(marker)
+
+
         # Add map widget to layout
         self.add_widget(self.map)
 
