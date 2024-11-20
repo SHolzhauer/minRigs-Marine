@@ -7,20 +7,26 @@ from kivy_garden.mapview import MapView, MapMarker, MapSource
 
 
 class CustomMapMarker(MapMarker):
-    def __init__(self, name, info, **kwargs):
+    def __init__(self, name, bridge_info, **kwargs):
         super().__init__(**kwargs)
-        self.name = name
         self.info = info
         self.bind(on_release=self.show_details)  # Trigger on marker click
 
     def show_details(self, *args):
         # Create the content for the popup
         content = BoxLayout(orientation="vertical", padding=10, spacing=10)
-        content.add_widget(Label(text=f"Name: {self.name}"))
-        content.add_widget(Label(text=f"Info: {self.info}"))
+        content.add_widget(Label(text=f"Name: {self.info['Name']}"))
+        try:
+            content.add_widget(Label(text=f"Telefoon: {self.info['PhoneNumber']}"))
+        except KeyError:
+            pass
 
         # Create and open the popup
-        popup = Popup(title="Marker Details", content=content, size_hint=(0.6, 0.4))
+        popup = Popup(
+            title="Marker Details", 
+            content=content, 
+            size_hint=(0.6, 0.4)
+        )
         popup.open()
 
 class NauticalMap(BoxLayout):
@@ -51,8 +57,7 @@ class NauticalMap(BoxLayout):
             marker = CustomMapMarker(
                 lat=br_geo[1],
                 lon=br_geo[0],
-                name=bridge["Name"],
-                info=f"Telefoon: {bridge['PhoneNumber']}"
+                bridge_info=bridge
             )
             self.map.add_marker(marker)
 
