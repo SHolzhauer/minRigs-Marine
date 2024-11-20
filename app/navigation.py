@@ -25,7 +25,7 @@ class NauticalMap(BoxLayout):
         )
         
         # Add the bridges
-        with open("src/bridge.json", "r") as f:
+        with open("app/src/bridge.json", "r") as f:
             info = f.read()
 
         info = json.loads(info)
