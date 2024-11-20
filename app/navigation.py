@@ -9,7 +9,7 @@ from kivy_garden.mapview import MapView, MapMarker, MapSource
 class CustomMapMarker(MapMarker):
     def __init__(self, bridge_info, **kwargs):
         super().__init__(**kwargs)
-        self.info = info
+        self.info = bridge_info
         self.bind(on_release=self.show_details)  # Trigger on marker click
 
     def show_details(self, *args):
