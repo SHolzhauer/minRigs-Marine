@@ -6,6 +6,23 @@ from kivy.clock import Clock
 from kivy_garden.mapview import MapView, MapMarker, MapSource
 
 
+class CustomMapMarker(MapMarker):
+    def __init__(self, name, info, **kwargs):
+        super().__init__(**kwargs)
+        self.name = name
+        self.info = info
+        self.bind(on_release=self.show_details)  # Trigger on marker click
+
+    def show_details(self, *args):
+        # Create the content for the popup
+        content = BoxLayout(orientation="vertical", padding=10, spacing=10)
+        content.add_widget(Label(text=f"Name: {self.name}"))
+        content.add_widget(Label(text=f"Info: {self.info}"))
+
+        # Create and open the popup
+        popup = Popup(title="Marker Details", content=content, size_hint=(0.6, 0.4))
+        popup.open()
+
 class NauticalMap(BoxLayout):
     
     def __init__(self, **kwargs):
@@ -31,9 +48,11 @@ class NauticalMap(BoxLayout):
         info = json.loads(info)
         for bridge in info["Result"]:
             br_geo = bridge["Geometry"][7:-1].split(" ")
-            marker = MapMarker(
+            marker = CustomMapMarker(
                 lat=br_geo[1],
-                lon=br_geo[0]
+                lon=br_geo[0],
+                name=bridge["Name"],
+                info=f"Telefoon: {bridge['PhoneNumber']}"
             )
             self.map.add_marker(marker)
 
