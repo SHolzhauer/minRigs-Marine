@@ -48,7 +48,7 @@ class MainScreen(Screen):
     def load_power_management(self):
         self._power_management = PowerManagement()
 
-    def load_naviagtion(self):
+    def load_navigation(self):
         self._map = NauticalMap()
 
     def load_logboek(self):
@@ -66,7 +66,7 @@ class MyApp(App):
         """Simulate loading tasks and switch to the main UI."""
         
         steps = [
-            ("Stroom schakel module aan het laden...", self.main_screen.load_power_management),
+            ("Stroom schakel module aan het laden...", self.load_power_management_module),
             ("Logboek aan het laden...", self.load_logboek_module),
             ("Navigatie aan het laden...", self.load_navigation_module),
             #("applicatie klaar maken...", self.load_main_ui)
@@ -167,10 +167,10 @@ class MyApp(App):
         Clock.schedule_once(lambda dt: self.main_screen.load_power_management())
 
     def load_logboek_module(self):
-        sleep(2)
+        Clock.schedule_once(lambda dt: self.main_screen.load_logboek())
     
     def load_navigation_module(self):
-        sleep(10)
+        Clock.schedule_once(lambda dt: self.main_screen.load_navigation())
 
     def build(self):
         self.sm = ScreenManager()
