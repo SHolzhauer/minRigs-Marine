@@ -97,7 +97,7 @@ class NauticalMap(BoxLayout):
         #    info = f.read()
 
         for infra_type in self._item_info:
-            for infra in self._item_info:
+            for infra in self._item_info[infra_type]:
                 geo = infra["Geometry"][7:-1].split(" ")
                 marker = CustomMapMarker(
                     lat=geo[1],
