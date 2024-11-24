@@ -16,7 +16,7 @@ def download_sources():
     # Download the item information
     infra_info = {}
     for item in ["bridge", "lock"]:
-        file_name = f"src/{item}.json"
+        file_name = f"app/src/{item}.json"
         item_info = []
         if not os.path.isfile(file_name):
             total_count = 9
