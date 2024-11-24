@@ -162,7 +162,7 @@ class MyApp(App):
         # Start the loading process
         threading.Thread(target=self.load_app, daemon=True).start()
 
-        sm.current = "main"
+        return self.sm
         
     def exit_app(self):
         logboek.log('status', 'gaat uit')
