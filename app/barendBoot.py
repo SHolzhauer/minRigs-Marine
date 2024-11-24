@@ -122,7 +122,7 @@ class MainScreen(Screen):
         # Add accordion items to accordion
         accordion.add_widget(logboek_item)
         accordion.add_widget(power_mgmt_item)
-        accordion.add_widget(map_item)
+        #accordion.add_widget(map_item)
 
         # Add accordion to the content layout
         content_layout.add_widget(accordion)
