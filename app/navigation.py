@@ -96,7 +96,8 @@ class NauticalMap(BoxLayout):
         #with open("app/src/bridge.json", "r") as f:
         #    info = f.read()
 
-        for infra_type in self._item_info:
+        #for infra_type in self._item_info:
+        for infra_type in ['bridge']:
             for infra in self._item_info[infra_type]:
                 try:
                     geo = infra["Geometry"][7:-1].split(" ")

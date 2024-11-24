@@ -4,10 +4,12 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.core.window import Window
+import threading
+from time import sleep
 from base import Logboek, startup, shutdown
-from power_management import PowerManagement
-from logboek import LogboekDisplay
-from navigation import NauticalMap  # Import your new NauticalMap class
+#from power_management import PowerManagement
+#from logboek import LogboekDisplay
+#from navigation import NauticalMap  # Import your new NauticalMap class
 import os
 
 logboek = Logboek()
@@ -27,7 +29,40 @@ class MyApp(App):
         # Set fullscreen
         Window.fullscreen = 'auto'
 
+    def load_app(self):
+        """Simulate loading tasks and switch to the main UI."""
+        steps = [
+            "Loading modules...",
+            "Initializing services...",
+            "Fetching data...",
+            "Setting up UI...",
+            "Almost there...",
+        ]
+
+        for step in steps:
+            self.loading_screen.update_status(step)
+            sleep(1)  # Simulate time taken for each step
+
+        # Switch to the main UI once loading is complete
+        self.sm.current = "main"
+        
     def build(self):
+        self.sm = ScreenManager()
+
+        # Add the loading screen
+        self.loading_screen = LoadingScreen(name="loading")
+        self.sm.add_widget(self.loading_screen)
+
+        # Add the main screen (will be shown later)
+        self.main_screen = MainScreen(name="main")
+        self.sm.add_widget(self.main_screen)
+
+        # Start the loading process
+        threading.Thread(target=self.load_app, daemon=True).start()
+
+        return self.sm
+        
+    def _old_builds(self):
         # Create main layout
         main_layout = BoxLayout(orientation='vertical')
 
