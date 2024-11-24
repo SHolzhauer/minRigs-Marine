@@ -49,46 +49,13 @@ class MainScreen(Screen):
         self._power_management = PowerManagement()
 
     def load_navigation(self):
-        self._map = NauticalMap()
+        #self._map = NauticalMap()
+        return
 
     def load_logboek(self):
         self._logboek = LogboekDisplay()
-
-class MyApp(App):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.title = "minRigs - Marine"
-        
-        # Set fullscreen
-        Window.fullscreen = 'auto'
-
-    def load_app(self):
-        """Simulate loading tasks and switch to the main UI."""
-        
-        steps = [
-            ("Stroom schakel module aan het laden...", self.load_power_management_module),
-            ("Logboek aan het laden...", self.load_logboek_module),
-            ("Navigatie aan het laden...", self.load_navigation_module),
-            #("applicatie klaar maken...", self.load_main_ui)
-
-        ]
-
-        for step, func in steps:
-            # Update the status on the loading screen
-            Clock.schedule_once(lambda dt, step=step: self.loading_screen.update_status(step))
-            sleep(1)  # Simulate some delay
-            if func:
-                func()
-
-        # Schedule the screen transition on the main thread
-        Clock.schedule_once(self.switch_to_main)
-
-    def switch_to_main(self, *args):
-        """Switch to the main UI."""
-        self.loading_screen.clear_widgets()  # Clear widgets from loading screen
-        self.sm.current = "main"
-        
-    def load_main_ui(self):
+    
+    def load_ui(self):
         # Create main layout
         main_layout = BoxLayout(orientation='vertical')
 
@@ -138,16 +105,16 @@ class MyApp(App):
         accordion = Accordion(orientation='horizontal')
 
         # Add Nautical Map
-        map_item = AccordionItem(title='Nautical Map')
-        map_item.add_widget(NauticalMap())
+        #map_item = AccordionItem(title='Nautical Map')
+        #map_item.add_widget(self._map)
         
         # Power Management
         power_mgmt_item = AccordionItem(title='Power Management')
-        power_mgmt_item.add_widget(PowerManagement())
+        power_mgmt_item.add_widget(self._power_management)
 
         # Logboek
         logboek_item = AccordionItem(title='Logboek')
-        logboek_item.add_widget(LogboekDisplay())
+        logboek_item.add_widget(self._logboek)
 
         # Add accordion items to accordion
         accordion.add_widget(logboek_item)
@@ -160,8 +127,41 @@ class MyApp(App):
         # Add the top bar and content layout to the main layout
         main_layout.add_widget(top_bar)
         main_layout.add_widget(content_layout)
+        self.layout.add_widget(main_layout)
 
-        Clock.schedule_once(lambda dt: self.main_screen.add_content(main_layout))
+class MyApp(App):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.title = "minRigs - Marine"
+        
+        # Set fullscreen
+        Window.fullscreen = 'auto'
+
+    def load_app(self):
+        """Simulate loading tasks and switch to the main UI."""
+        
+        steps = [
+            ("Stroom schakel module aan het laden...", self.load_power_management_module),
+            ("Logboek aan het laden...", self.load_logboek_module),
+            ("Navigatie aan het laden...", self.load_navigation_module),
+            ("applicatie klaar maken...", self.load_main_ui)
+
+        ]
+
+        for step, func in steps:
+            # Update the status on the loading screen
+            Clock.schedule_once(lambda dt, step=step: self.loading_screen.update_status(step))
+            sleep(1)  # Simulate some delay
+            if func:
+                func()
+
+        # Schedule the screen transition on the main thread
+        Clock.schedule_once(self.switch_to_main)
+
+    def switch_to_main(self, *args):
+        """Switch to the main UI."""
+        self.loading_screen.clear_widgets()  # Clear widgets from loading screen
+        self.sm.current = "main"
     
     def load_power_management_module(self):
         Clock.schedule_once(lambda dt: self.main_screen.load_power_management())
@@ -172,6 +172,9 @@ class MyApp(App):
     def load_navigation_module(self):
         Clock.schedule_once(lambda dt: self.main_screen.load_navigation())
 
+    def load_main_ui(self):
+        Clock.schedule_once(lambda dt: self.main_screen.load_ui())
+    
     def build(self):
         self.sm = ScreenManager()
 
