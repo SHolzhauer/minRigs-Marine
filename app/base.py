@@ -2,6 +2,7 @@ from git import Repo
 import datetime
 import os
 import http.client as httplib
+import requests
 
 class Logboek:
 
@@ -16,7 +17,6 @@ class Logboek:
 
         with open(self._logboek, "a") as logboek:
             logboek.write(f"{tijd},{unit},{metric}\n")
-
 
 def startup():
     logboek = Logboek()
@@ -47,6 +47,8 @@ def startup():
         os.execv(sys.executable, ['python'] + sys.argv)
     else:
         logboek.log("system", 'no update required')
+    
+    download_sources()
 
 
 def shutdown():

@@ -1,4 +1,6 @@
+import os.path
 import json
+import requests
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
@@ -7,6 +9,39 @@ from kivy.graphics import Rectangle, Color
 from kivy.clock import Clock
 from kivy_garden.mapview import MapView, MapMarker, MapSource
 
+
+def download_sources():
+    """Download the Fairway information from Rijkswaterstaat"""
+    
+    # Download the item information
+    infra_info = {}
+    for item in ["bridge", "lock"]:
+        file_name = f"src/{item}.json"
+        item_info = []
+        if not os.path.isfile(file_name):
+            total_count = 9
+            offset = 0
+            while len(item_info) < total_count:
+                resp = requests.get(
+                    url=f"https://www.vaarweginformatie.nl/wfswms/queryservice/1.4/current/{item}",
+                    params={
+                        "offset": offset
+                    }
+                ).json()
+                total_count = resp["TotalCount"]
+                item_info += resp["Result"]
+                offset += 100
+            
+            # Store the information in a file
+            with open(file_name, "w") as f:
+                f.write(json.dumps(item_info))
+        else:
+            with open(file_name, "r") as f:
+                item_info = json.loads(f.read())
+
+        infra_info[item] = item_info
+    
+    return infra_info
 
 class CustomMapMarker(MapMarker):
     def __init__(self, bridge_info, **kwargs):
@@ -22,6 +57,13 @@ class CustomMapMarker(MapMarker):
             content.add_widget(Label(text=f"Telefoon: {self.info['PhoneNumber']}"))
         except KeyError:
             pass
+        try:
+            if self.info['CanOpen']:
+                content.add_widget(Label(text="Beweegbare Brug"))
+            else:
+                content.add_widget(Label(text="Vaste Brug"))
+        except KeyError:
+            pass
 
         # Create and open the popup
         popup = Popup(
@@ -35,6 +77,7 @@ class NauticalMap(BoxLayout):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self._item_info = []
         
         mapsource = MapSource(
             #min_zoom=14,
@@ -50,8 +93,8 @@ class NauticalMap(BoxLayout):
         )
         
         # Add the bridges
-        with open("app/src/bridge.json", "r") as f:
-            info = f.read()
+        #with open("app/src/bridge.json", "r") as f:
+        #    info = f.read()
 
         info = json.loads(info)
         for bridge in info["Result"]:

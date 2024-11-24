@@ -1,3 +1,5 @@
 venv/*
 **.pyc
 *.csv
+app/src/*.json
+app/run_test.py
