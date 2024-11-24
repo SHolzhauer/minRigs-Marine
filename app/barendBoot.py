@@ -3,6 +3,7 @@ from kivy.uix.accordion import Accordion, AccordionItem
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
+from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
 import threading
 from time import sleep
