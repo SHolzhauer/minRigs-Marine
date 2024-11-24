@@ -5,6 +5,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.core.window import Window
+from kivy.clock import Clock
 import threading
 from time import sleep
 from base import Logboek, startup, shutdown
@@ -135,13 +136,16 @@ class MyApp(App):
         ]
 
         for step in steps:
-            self.loading_screen.update_status(step)
+            # Schedule the status update on the main thread
+            Clock.schedule_once(lambda dt, step=step: self.loading_screen.update_status(step))
             sleep(1)  # Simulate time taken for each step
 
-        # Clear the loading screen's widgets
-        self.loading_screen.clear_widgets()
+        # Schedule the screen transition on the main thread
+        Clock.schedule_once(self.switch_to_main)
 
-        # Switch to the main UI once loading is complete
+    def switch_to_main(self, *args):
+        """Switch to the main UI."""
+        self.loading_screen.clear_widgets()  # Clear widgets from loading screen
         self.sm.current = "main"
         
     def build(self):
@@ -158,7 +162,7 @@ class MyApp(App):
         # Start the loading process
         threading.Thread(target=self.load_app, daemon=True).start()
 
-        return self.sm
+        sm.current = "main"
         
     def exit_app(self):
         logboek.log('status', 'gaat uit')
