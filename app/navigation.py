@@ -98,14 +98,16 @@ class NauticalMap(BoxLayout):
 
         for infra_type in self._item_info:
             for infra in self._item_info[infra_type]:
-                geo = infra["Geometry"][7:-1].split(" ")
-                marker = CustomMapMarker(
-                    lat=geo[1],
-                    lon=geo[0],
-                    infra_info=infra,
-                )
-                self.map.add_marker(marker)
-
+                try:
+                    geo = infra["Geometry"][7:-1].split(" ")
+                    marker = CustomMapMarker(
+                        lat=geo[1],
+                        lon=geo[0],
+                        infra_info=infra,
+                    )
+                    self.map.add_marker(marker)
+                except Exception:
+                    pass
 
         # Add map widget to layout
         self.add_widget(self.map)
