@@ -44,9 +44,9 @@ class MainScreen(Screen):
         self._map = None
         self.title = f"{app_title}"
 
-    def add_content(self, content):
+    def set_content(self, content):
         """Add content dynamically to the main screen."""
-        self.layout.add_widget(content)
+        self.add_widget(content)
     
     def load_power_management(self):
         self._power_management = PowerManagement()
@@ -130,7 +130,7 @@ class MainScreen(Screen):
         # Add the top bar and content layout to the main layout
         main_layout.add_widget(top_bar)
         main_layout.add_widget(content_layout)
-        self.add_content(main_layout)
+        self.set_content(main_layout)
     
     def exit_app(self):
         logboek.log('status', 'gaat uit')
