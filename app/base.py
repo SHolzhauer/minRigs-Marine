@@ -47,8 +47,6 @@ def startup():
         os.execv(sys.executable, ['python'] + sys.argv)
     else:
         logboek.log("system", 'no update required')
-    
-    download_sources()
 
 
 def shutdown():
