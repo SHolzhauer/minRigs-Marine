@@ -14,6 +14,8 @@ from logboek import LogboekDisplay
 from navigation import NauticalMap  # Import your new NauticalMap class
 import os
 
+app_title = "minRigs - Marine"
+
 logboek = Logboek()
 
 def shutdown_system():
@@ -40,6 +42,7 @@ class MainScreen(Screen):
         super().__init__(**kwargs)
         self._power_management = None
         self._map = None
+        self.title = f"{app_title}"
 
     def add_content(self, content):
         """Add content dynamically to the main screen."""
@@ -128,11 +131,16 @@ class MainScreen(Screen):
         main_layout.add_widget(top_bar)
         main_layout.add_widget(content_layout)
         self.layout.add_widget(main_layout)
+    
+    def exit_app(self):
+        logboek.log('status', 'gaat uit')
+        shutdown()
+        self.stop()  # Close the app
 
 class MyApp(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.title = "minRigs - Marine"
+        self.title = f"{app_title}"
         
         # Set fullscreen
         Window.fullscreen = 'auto'
@@ -190,11 +198,6 @@ class MyApp(App):
         threading.Thread(target=self.load_app, daemon=True).start()
 
         return self.sm
-        
-    def exit_app(self):
-        logboek.log('status', 'gaat uit')
-        shutdown()
-        self.stop()  # Close the app
 
 if __name__ == '__main__':
     logboek.log('status', 'aan gezet')
