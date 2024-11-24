@@ -34,18 +34,6 @@ class LoadingScreen(Screen):
     def update_status(self, status):
         """Update the status message."""
         self.status_label.text = status
-    
-    def load_power_management_module(self):
-        self.update_status("Stroom schakel module aan het laden...")
-        sleep(5)
-
-    def load_logboek_module(self):
-        self.update_status("Logboek aan het laden...")
-        sleep(2)
-    
-    def load_navigation_module(self):
-        self.update_status("Navigatie aan het laden...")
-        sleep(10)
 
 class MainScreen(Screen):
     def __init__(self, **kwargs):
@@ -139,13 +127,19 @@ class MyApp(App):
     def load_app(self):
         """Simulate loading tasks and switch to the main UI."""
         
-        Clock.schedule_once(lambda dt, step=step: self.loading_screen.load_power_management_module())
-        Clock.schedule_once(lambda dt, step=step: self.loading_screen.load_logboek_module())
-        Clock.schedule_once(lambda dt, step=step: self.loading_screen.load_navigation_module())
-        #for step in steps:
-            # Schedule the status update on the main thread
-            #Clock.schedule_once(lambda dt, step=step: self.loading_screen.update_status(step))
-            #sleep(1)  # Simulate time taken for each step
+        steps = [
+            ("Stroom schakel module aan het laden...", self.load_power_management_module),
+            ("Logboek aan het laden...", self.load_logboek_module),
+            ("Navigatie aan het laden...", self.load_navigation_module)
+
+        ]
+
+        for step, func in steps:
+            # Update the status on the loading screen
+            Clock.schedule_once(lambda dt, step=step: self.loading_screen.update_status(step))
+            sleep(1)  # Simulate some delay
+            if func:
+                func()
 
         # Schedule the screen transition on the main thread
         Clock.schedule_once(self.switch_to_main)
@@ -155,6 +149,15 @@ class MyApp(App):
         self.loading_screen.clear_widgets()  # Clear widgets from loading screen
         self.sm.current = "main"
         
+    def load_power_management_module(self):
+        sleep(5)
+
+    def load_logboek_module(self):
+        sleep(2)
+    
+    def load_navigation_module(self):
+        sleep(10)
+
     def build(self):
         self.sm = ScreenManager()
 
