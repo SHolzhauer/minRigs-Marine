@@ -22,6 +22,27 @@ def reboot_system():
     os.system("shutdown -r now")
 
 
+class LoadingScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.layout = BoxLayout(orientation="vertical", padding=20, spacing=10)
+        self.status_label = Label(text="Starting application...", font_size=24)
+        self.layout.add_widget(self.status_label)
+        self.add_widget(self.layout)
+
+    def update_status(self, status):
+        """Update the status message."""
+        self.status_label.text = status
+
+
+class MainScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        layout = BoxLayout(orientation="vertical", padding=20, spacing=10)
+        layout.add_widget(Label(text="Main UI Loaded!", font_size=24))
+        self.add_widget(layout)
+
+
 class MyApp(App):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
