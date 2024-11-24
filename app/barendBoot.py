@@ -130,7 +130,7 @@ class MainScreen(Screen):
         # Add the top bar and content layout to the main layout
         main_layout.add_widget(top_bar)
         main_layout.add_widget(content_layout)
-        self.layout.add_widget(main_layout)
+        self.add_content(main_layout)
     
     def exit_app(self):
         logboek.log('status', 'gaat uit')
