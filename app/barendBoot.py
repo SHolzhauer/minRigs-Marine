@@ -42,49 +42,7 @@ class MainScreen(Screen):
         layout.add_widget(Label(text="Main UI Loaded!", font_size=24))
         self.add_widget(layout)
 
-
-class MyApp(App):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.title = "minRigs - Marine"
-        
-        # Set fullscreen
-        Window.fullscreen = 'auto'
-
-    def load_app(self):
-        """Simulate loading tasks and switch to the main UI."""
-        steps = [
-            "Loading modules...",
-            "Initializing services...",
-            "Fetching data...",
-            "Setting up UI...",
-            "Almost there...",
-        ]
-
-        for step in steps:
-            self.loading_screen.update_status(step)
-            sleep(1)  # Simulate time taken for each step
-
-        # Switch to the main UI once loading is complete
-        self.sm.current = "main"
-        
-    def build(self):
-        self.sm = ScreenManager()
-
-        # Add the loading screen
-        self.loading_screen = LoadingScreen(name="loading")
-        self.sm.add_widget(self.loading_screen)
-
-        # Add the main screen (will be shown later)
-        self.main_screen = MainScreen(name="main")
-        self.sm.add_widget(self.main_screen)
-
-        # Start the loading process
-        threading.Thread(target=self.load_app, daemon=True).start()
-
-        return self.sm
-        
-    def _old_builds(self):
+    def _run_main_build():
         # Create main layout
         main_layout = BoxLayout(orientation='vertical')
 
@@ -157,8 +115,51 @@ class MyApp(App):
         main_layout.add_widget(top_bar)
         main_layout.add_widget(content_layout)
 
-        return main_layout
 
+class MyApp(App):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.title = "minRigs - Marine"
+        
+        # Set fullscreen
+        Window.fullscreen = 'auto'
+
+    def load_app(self):
+        """Simulate loading tasks and switch to the main UI."""
+        steps = [
+            "Loading modules...",
+            "Initializing services...",
+            "Fetching data...",
+            "Setting up UI...",
+            "Almost there...",
+        ]
+
+        for step in steps:
+            self.loading_screen.update_status(step)
+            sleep(1)  # Simulate time taken for each step
+
+        # Clear the loading screen's widgets
+        self.loading_screen.clear_widgets()
+
+        # Switch to the main UI once loading is complete
+        self.sm.current = "main"
+        
+    def build(self):
+        self.sm = ScreenManager()
+
+        # Add the loading screen
+        self.loading_screen = LoadingScreen(name="loading")
+        self.sm.add_widget(self.loading_screen)
+
+        # Add the main screen (will be shown later)
+        self.main_screen = MainScreen(name="main")
+        self.sm.add_widget(self.main_screen)
+
+        # Start the loading process
+        threading.Thread(target=self.load_app, daemon=True).start()
+
+        return self.sm
+        
     def exit_app(self):
         logboek.log('status', 'gaat uit')
         shutdown()
