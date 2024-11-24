@@ -44,9 +44,9 @@ def download_sources():
     return infra_info
 
 class CustomMapMarker(MapMarker):
-    def __init__(self, bridge_info, **kwargs):
+    def __init__(self, infra_info, **kwargs):
         super().__init__(**kwargs)
-        self.info = bridge_info
+        self.info = infra_info
         self.bind(on_release=self.show_details)  # Trigger on marker click
 
     def show_details(self, *args):
@@ -77,7 +77,7 @@ class NauticalMap(BoxLayout):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._item_info = []
+        self._item_info = download_sources()
         
         mapsource = MapSource(
             #min_zoom=14,
@@ -96,13 +96,12 @@ class NauticalMap(BoxLayout):
         #with open("app/src/bridge.json", "r") as f:
         #    info = f.read()
 
-        info = json.loads(info)
-        for bridge in info["Result"]:
-            br_geo = bridge["Geometry"][7:-1].split(" ")
+        for infra in self._item_info:
+            geo = infra["Geometry"][7:-1].split(" ")
             marker = CustomMapMarker(
-                lat=br_geo[1],
-                lon=br_geo[0],
-                bridge_info=bridge
+                lat=geo[1],
+                lon=geo[0],
+                infra_info=infra
             )
             self.map.add_marker(marker)
 
