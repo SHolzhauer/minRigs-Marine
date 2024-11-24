@@ -52,8 +52,7 @@ class MainScreen(Screen):
         self._power_management = PowerManagement()
 
     def load_navigation(self):
-        #self._map = NauticalMap()
-        return
+        self._map = NauticalMap()
 
     def load_logboek(self):
         self._logboek = LogboekDisplay()
@@ -108,8 +107,8 @@ class MainScreen(Screen):
         accordion = Accordion(orientation='horizontal')
 
         # Add Nautical Map
-        #map_item = AccordionItem(title='Nautical Map')
-        #map_item.add_widget(self._map)
+        map_item = AccordionItem(title='Nautical Map')
+        map_item.add_widget(self._map)
         
         # Power Management
         power_mgmt_item = AccordionItem(title='Power Management')
@@ -122,7 +121,7 @@ class MainScreen(Screen):
         # Add accordion items to accordion
         accordion.add_widget(logboek_item)
         accordion.add_widget(power_mgmt_item)
-        #accordion.add_widget(map_item)
+        accordion.add_widget(map_item)
 
         # Add accordion to the content layout
         content_layout.add_widget(accordion)
