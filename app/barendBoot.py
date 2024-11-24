@@ -28,9 +28,20 @@ def reboot_system():
 class LoadingScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.layout = BoxLayout(orientation="vertical", padding=20, spacing=10)
-        self.status_label = Label(text="Starting application...", font_size=24)
+        # Create the main layout with a GridLayout to organize image and text in two columns
+        self.layout = GridLayout(cols=2, padding=20, spacing=10)
+        
+        # Create an image widget for the left column
+        self.image_widget = Image(source="boat.jpg", size_hint=(None, None), size=(200, 200))
+
+        # Create a label widget for the right column
+        self.status_label = Label(text="Starting application...", font_size=24, valign="middle", halign="left", size_hint=(None, None))
+
+        # Add the image and label to the layout
+        self.layout.add_widget(self.image_widget)
         self.layout.add_widget(self.status_label)
+
+        # Add the layout to the screen
         self.add_widget(self.layout)
 
     def update_status(self, status):
