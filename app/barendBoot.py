@@ -37,9 +37,6 @@ class LoadingScreen(Screen):
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        layout = BoxLayout(orientation="vertical", padding=20, spacing=10)
-        layout.add_widget(Label(text="Main UI Loaded!", font_size=24))
-        self.add_widget(layout)
 
     def add_content(self, content):
         """Add content dynamically to the main screen."""
@@ -60,7 +57,7 @@ class MyApp(App):
             ("Stroom schakel module aan het laden...", self.load_power_management_module),
             ("Logboek aan het laden...", self.load_logboek_module),
             ("Navigatie aan het laden...", self.load_navigation_module),
-            ("applicatie klaar maken...", self.load_main_ui)
+            #("applicatie klaar maken...", self.load_main_ui)
 
         ]
 
@@ -155,8 +152,25 @@ class MyApp(App):
         Clock.schedule_once(lambda dt: self.main_screen.add_content(main_layout))
 
     def load_power_management_module(self):
-        from power_management import PowerManagement
-        sleep(5)
+        try:
+            # Dynamically import PowerManagement
+            from power_management import PowerManagement
+            print("PowerManagement module imported successfully.")
+
+            # Create PowerManagement UI
+            power_mgmt_item = AccordionItem(title='Power Management')
+            power_mgmt_item.add_widget(PowerManagement())
+
+            # Add to the main screen (ensure main screen is ready)
+            if self.main_screen:
+                Clock.schedule_once(
+                    lambda dt: self.main_screen.add_content(power_mgmt_item)
+                )
+                print("PowerManagement UI added to the main screen.")
+            else:
+                print("Main screen not ready. PowerManagement UI not added.")
+        except ImportError as e:
+            print(f"Error importing PowerManagement: {e}")
 
     def load_logboek_module(self):
         sleep(2)
