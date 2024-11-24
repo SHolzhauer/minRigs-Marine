@@ -9,7 +9,6 @@ from kivy.clock import Clock
 import threading
 from time import sleep
 from base import Logboek, startup, shutdown
-#from power_management import PowerManagement
 #from logboek import LogboekDisplay
 #from navigation import NauticalMap  # Import your new NauticalMap class
 import os
@@ -42,7 +41,45 @@ class MainScreen(Screen):
         layout.add_widget(Label(text="Main UI Loaded!", font_size=24))
         self.add_widget(layout)
 
-    def _run_main_build():
+    def add_content(self, content):
+        """Add content dynamically to the main screen."""
+        self.layout.add_widget(content)
+
+class MyApp(App):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.title = "minRigs - Marine"
+        
+        # Set fullscreen
+        Window.fullscreen = 'auto'
+
+    def load_app(self):
+        """Simulate loading tasks and switch to the main UI."""
+        
+        steps = [
+            ("Stroom schakel module aan het laden...", self.load_power_management_module),
+            ("Logboek aan het laden...", self.load_logboek_module),
+            ("Navigatie aan het laden...", self.load_navigation_module),
+            ("applicatie klaar maken...", self.load_main_ui)
+
+        ]
+
+        for step, func in steps:
+            # Update the status on the loading screen
+            Clock.schedule_once(lambda dt, step=step: self.loading_screen.update_status(step))
+            sleep(1)  # Simulate some delay
+            if func:
+                func()
+
+        # Schedule the screen transition on the main thread
+        Clock.schedule_once(self.switch_to_main)
+
+    def switch_to_main(self, *args):
+        """Switch to the main UI."""
+        self.loading_screen.clear_widgets()  # Clear widgets from loading screen
+        self.sm.current = "main"
+        
+    def load_main_ui(self):
         # Create main layout
         main_layout = BoxLayout(orientation='vertical')
 
@@ -115,41 +152,10 @@ class MainScreen(Screen):
         main_layout.add_widget(top_bar)
         main_layout.add_widget(content_layout)
 
+        Clock.schedule_once(lambda dt: self.main_screen.add_content(main_layout))
 
-class MyApp(App):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.title = "minRigs - Marine"
-        
-        # Set fullscreen
-        Window.fullscreen = 'auto'
-
-    def load_app(self):
-        """Simulate loading tasks and switch to the main UI."""
-        
-        steps = [
-            ("Stroom schakel module aan het laden...", self.load_power_management_module),
-            ("Logboek aan het laden...", self.load_logboek_module),
-            ("Navigatie aan het laden...", self.load_navigation_module)
-
-        ]
-
-        for step, func in steps:
-            # Update the status on the loading screen
-            Clock.schedule_once(lambda dt, step=step: self.loading_screen.update_status(step))
-            sleep(1)  # Simulate some delay
-            if func:
-                func()
-
-        # Schedule the screen transition on the main thread
-        Clock.schedule_once(self.switch_to_main)
-
-    def switch_to_main(self, *args):
-        """Switch to the main UI."""
-        self.loading_screen.clear_widgets()  # Clear widgets from loading screen
-        self.sm.current = "main"
-        
     def load_power_management_module(self):
+        from power_management import PowerManagement
         sleep(5)
 
     def load_logboek_module(self):
