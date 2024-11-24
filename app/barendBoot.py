@@ -151,24 +151,28 @@ class MyApp(App):
 
         Clock.schedule_once(lambda dt: self.main_screen.add_content(main_layout))
 
+    def add_power_management_ui(self):
+        """Create the PowerManagement UI and add it to the main screen."""
+        # Create PowerManagement UI elements
+        power_mgmt_item = AccordionItem(title='Power Management')
+        power_mgmt_item.add_widget(PowerManagement())
+
+        # Add to the main screen (ensure main screen is ready)
+        if self.main_screen:
+            self.main_screen.add_content(power_mgmt_item)
+            print("PowerManagement UI added to the main screen.")
+        else:
+            print("Main screen not ready. PowerManagement UI not added.")
+    
     def load_power_management_module(self):
         try:
             # Dynamically import PowerManagement
             from power_management import PowerManagement
             print("PowerManagement module imported successfully.")
 
-            # Create PowerManagement UI
-            power_mgmt_item = AccordionItem(title='Power Management')
-            power_mgmt_item.add_widget(PowerManagement())
+            # Use Clock.schedule_once to ensure UI operations are on the main thread
+            Clock.schedule_once(lambda dt: self.add_power_management_ui())
 
-            # Add to the main screen (ensure main screen is ready)
-            if self.main_screen:
-                Clock.schedule_once(
-                    lambda dt: self.main_screen.add_content(power_mgmt_item)
-                )
-                print("PowerManagement UI added to the main screen.")
-            else:
-                print("Main screen not ready. PowerManagement UI not added.")
         except ImportError as e:
             print(f"Error importing PowerManagement: {e}")
 
