@@ -38,6 +38,7 @@ class LoadingScreen(Screen):
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self._power_management = None
 
     def add_content(self, content):
         """Add content dynamically to the main screen."""
@@ -154,15 +155,9 @@ class MyApp(App):
     
     def load_power_management_module(self):
         # Create PowerManagement UI elements
-        power_mgmt_item = AccordionItem(title='Power Management')
-        power_mgmt_item.add_widget(PowerManagement())
-
-        # Add to the main screen (ensure main screen is ready)
-        if self.main_screen:
-            self.main_screen.add_content(power_mgmt_item)
-            print("PowerManagement UI added to the main screen.")
-        else:
-            print("Main screen not ready. PowerManagement UI not added.")
+        #power_mgmt_item = AccordionItem(title='Power Management')
+        #power_mgmt_item.add_widget(PowerManagement())
+        self.main_screen._power_management = PowerManagement()
 
     def load_logboek_module(self):
         sleep(2)
