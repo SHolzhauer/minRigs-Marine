@@ -34,7 +34,18 @@ class LoadingScreen(Screen):
     def update_status(self, status):
         """Update the status message."""
         self.status_label.text = status
+    
+    def load_power_management_module(self):
+        self.update_status("Stroom schakel module aan het laden...")
+        sleep(5)
 
+    def load_logboek_module(self):
+        self.update_status("Logboek aan het laden...")
+        sleep(2)
+    
+    def load_navigation_module(self):
+        self.update_status("Navigatie aan het laden...")
+        sleep(10)
 
 class MainScreen(Screen):
     def __init__(self, **kwargs):
@@ -127,18 +138,14 @@ class MyApp(App):
 
     def load_app(self):
         """Simulate loading tasks and switch to the main UI."""
-        steps = [
-            "Loading modules...",
-            "Initializing services...",
-            "Fetching data...",
-            "Setting up UI...",
-            "Almost there...",
-        ]
-
-        for step in steps:
+        
+        Clock.schedule_once(lambda dt, step=step: self.loading_screen.load_power_management_module())
+        Clock.schedule_once(lambda dt, step=step: self.loading_screen.load_logboek_module())
+        Clock.schedule_once(lambda dt, step=step: self.loading_screen.load_navigation_module())
+        #for step in steps:
             # Schedule the status update on the main thread
-            Clock.schedule_once(lambda dt, step=step: self.loading_screen.update_status(step))
-            sleep(1)  # Simulate time taken for each step
+            #Clock.schedule_once(lambda dt, step=step: self.loading_screen.update_status(step))
+            #sleep(1)  # Simulate time taken for each step
 
         # Schedule the screen transition on the main thread
         Clock.schedule_once(self.switch_to_main)
