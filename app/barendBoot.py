@@ -43,6 +43,9 @@ class MainScreen(Screen):
     def add_content(self, content):
         """Add content dynamically to the main screen."""
         self.layout.add_widget(content)
+    
+    def load_power_management(self):
+        self._power_management = PowerManagement()
 
 class MyApp(App):
     def __init__(self, **kwargs):
@@ -157,7 +160,7 @@ class MyApp(App):
         # Create PowerManagement UI elements
         #power_mgmt_item = AccordionItem(title='Power Management')
         #power_mgmt_item.add_widget(PowerManagement())
-        self.main_screen._power_management = PowerManagement()
+        Clock.schedule_once(lambda dt: self.main_screen.load_power_management())
 
     def load_logboek_module(self):
         sleep(2)
