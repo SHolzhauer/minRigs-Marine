@@ -39,6 +39,7 @@ class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._power_management = None
+        self._map = None
 
     def add_content(self, content):
         """Add content dynamically to the main screen."""
@@ -46,6 +47,12 @@ class MainScreen(Screen):
     
     def load_power_management(self):
         self._power_management = PowerManagement()
+
+    def load_naviagtion(self):
+        self._map = NauticalMap()
+
+    def load_logboek(self):
+        self._logboek = LogboekDisplay()
 
 class MyApp(App):
     def __init__(self, **kwargs):
@@ -59,7 +66,7 @@ class MyApp(App):
         """Simulate loading tasks and switch to the main UI."""
         
         steps = [
-            ("Stroom schakel module aan het laden...", self.load_power_management_module),
+            ("Stroom schakel module aan het laden...", self.main_screen.load_power_management),
             ("Logboek aan het laden...", self.load_logboek_module),
             ("Navigatie aan het laden...", self.load_navigation_module),
             #("applicatie klaar maken...", self.load_main_ui)
@@ -157,9 +164,6 @@ class MyApp(App):
         Clock.schedule_once(lambda dt: self.main_screen.add_content(main_layout))
     
     def load_power_management_module(self):
-        # Create PowerManagement UI elements
-        #power_mgmt_item = AccordionItem(title='Power Management')
-        #power_mgmt_item.add_widget(PowerManagement())
         Clock.schedule_once(lambda dt: self.main_screen.load_power_management())
 
     def load_logboek_module(self):
